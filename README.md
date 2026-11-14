@@ -14,6 +14,7 @@ The contracts of [opslab](https://github.com/Sigeth) (working name), a self-host
 | `pkg/challenge` | Load, validate and default a challenge package. The operator and the CLI use the same code, so they agree on what a valid package is. |
 | `pkg/checkerio` | The checker contract: environment variables, targets file, JSON-lines task results. |
 | `pkg/ocipkg` | Challenge packages as OCI artifacts: pack, fetch, solution referrers, image pinning by digest (D38). |
+| `pkg/signing` | Sign and verify packages and catalog indexes: Sigstore bundles as OCI referrers, checked against a `TrustPolicy` (keys or keyless identities, D40). |
 | `pkg/kubeexec` | Run commands in containers through the Kubernetes API (operator setup scripts, checker exec checks). |
 | `pkg/project` | Project-wide identifiers (name, API group, owner, platform). Rename here. |
 | `samples/` | Example custom resources. |

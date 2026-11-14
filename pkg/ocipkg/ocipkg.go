@@ -51,6 +51,8 @@ const (
 type Package struct {
 	// Descriptor of the OCI manifest: its digest identifies the package.
 	Descriptor ocispec.Descriptor
+	// OCIManifest is the OCI manifest as stored, the content signatures sign.
+	OCIManifest []byte
 	// Manifest is the challenge manifest, as stored (not defaulted).
 	Manifest *v1alpha1.ChallengePackage
 	// Files of the package by path, without the manifest file.
@@ -129,7 +131,7 @@ func pushIfMissing(ctx context.Context, dst content.Pusher, desc ocispec.Descrip
 // types, digests and file paths are checked; the manifest is decoded strictly
 // but not validated (see challenge.Validate).
 func Fetch(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor) (*Package, error) {
-	manifest, err := fetchManifest(ctx, src, desc, ArtifactType)
+	manifest, raw, err := fetchManifest(ctx, src, desc, ArtifactType)
 	if err != nil {
 		return nil, err
 	}
@@ -148,37 +150,37 @@ func Fetch(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor) (*
 	if err != nil {
 		return nil, err
 	}
-	return &Package{Descriptor: desc, Manifest: pkg, Files: files}, nil
+	return &Package{Descriptor: desc, OCIManifest: raw, Manifest: pkg, Files: files}, nil
 }
 
 // FetchSolution reads the solution files whose OCI manifest is desc from src.
 func FetchSolution(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor) (map[string][]byte, error) {
-	manifest, err := fetchManifest(ctx, src, desc, SolutionArtifactType)
+	manifest, _, err := fetchManifest(ctx, src, desc, SolutionArtifactType)
 	if err != nil {
 		return nil, err
 	}
 	return fetchFiles(ctx, src, manifest)
 }
 
-func fetchManifest(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor, artifactType string) (*ocispec.Manifest, error) {
+func fetchManifest(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor, artifactType string) (*ocispec.Manifest, []byte, error) {
 	if desc.MediaType != ocispec.MediaTypeImageManifest {
-		return nil, fmt.Errorf("%s has media type %q, want an OCI image manifest", desc.Digest, desc.MediaType)
+		return nil, nil, fmt.Errorf("%s has media type %q, want an OCI image manifest", desc.Digest, desc.MediaType)
 	}
 	data, err := fetchBlob(ctx, src, desc, MaxManifestSize)
 	if err != nil {
-		return nil, fmt.Errorf("manifest: %w", err)
+		return nil, nil, fmt.Errorf("manifest: %w", err)
 	}
 	var manifest ocispec.Manifest
 	if err := json.Unmarshal(data, &manifest); err != nil {
-		return nil, fmt.Errorf("decoding manifest %s: %w", desc.Digest, err)
+		return nil, nil, fmt.Errorf("decoding manifest %s: %w", desc.Digest, err)
 	}
 	if manifest.MediaType != ocispec.MediaTypeImageManifest {
-		return nil, fmt.Errorf("manifest %s has media type %q, want an OCI image manifest", desc.Digest, manifest.MediaType)
+		return nil, nil, fmt.Errorf("manifest %s has media type %q, want an OCI image manifest", desc.Digest, manifest.MediaType)
 	}
 	if manifest.ArtifactType != artifactType {
-		return nil, fmt.Errorf("%s is not a %s artifact (artifact type %q)", desc.Digest, project.Name, manifest.ArtifactType)
+		return nil, nil, fmt.Errorf("%s is not a %s artifact (artifact type %q)", desc.Digest, project.Name, manifest.ArtifactType)
 	}
-	return &manifest, nil
+	return &manifest, data, nil
 }
 
 func fetchFiles(ctx context.Context, src content.Fetcher, manifest *ocispec.Manifest) (map[string][]byte, error) {
