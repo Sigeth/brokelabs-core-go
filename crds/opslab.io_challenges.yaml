@@ -804,6 +804,12 @@ spec:
                 description: Digest of the installed package artifact. New instances
                   use it.
                 type: string
+              filesConfigMap:
+                description: |-
+                  FilesConfigMap is the ConfigMap, in the operator namespace, holding the
+                  files of the installed package (keys as in InlinePackage.FilesConfigMap).
+                  Its PackageDigestAnnotation equals Digest once the files are in place.
+                type: string
               mirrored:
                 description: Mirrored is true when the package and its images are
                   in the in-cluster registry.

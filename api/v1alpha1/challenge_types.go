@@ -2,7 +2,13 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"github.com/Sigeth/opslab-core-go/pkg/project"
 )
+
+// PackageDigestAnnotation is set on the ConfigMap of an installed package
+// to the digest of the package its files come from.
+const PackageDigestAnnotation = project.LabelPrefix + "package-digest"
 
 // ChallengeSource is where an installed challenge comes from. Exactly one
 // field must be set.
@@ -73,6 +79,11 @@ type ChallengeStatus struct {
 	// Package is the resolved and validated manifest.
 	// +optional
 	Package *ChallengePackage `json:"package,omitempty"`
+	// FilesConfigMap is the ConfigMap, in the operator namespace, holding the
+	// files of the installed package (keys as in InlinePackage.FilesConfigMap).
+	// Its PackageDigestAnnotation equals Digest once the files are in place.
+	// +optional
+	FilesConfigMap string `json:"filesConfigMap,omitempty"`
 	// Mirrored is true when the package and its images are in the in-cluster registry.
 	// +optional
 	Mirrored bool `json:"mirrored,omitempty"`
