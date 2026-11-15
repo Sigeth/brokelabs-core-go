@@ -136,6 +136,10 @@ func (r Remote) Repository(ref string) (*remote.Repository, registry.Reference, 
 		Credential: r.Credential,
 	}
 	repo.PlainHTTP = r.PlainHTTP != nil && r.PlainHTTP(parsed.Registry)
+	// Registries without the referrers API (ghcr.io) keep referrers in a
+	// tagged index that each new referrer replaces. Deleting the replaced
+	// index is refused by some of them (ghcr.io answers 405): leave it.
+	repo.SkipReferrersGC = true
 	return repo, parsed, nil
 }
 
