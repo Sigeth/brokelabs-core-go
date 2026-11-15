@@ -12,6 +12,7 @@ The contracts of [opslab](https://github.com/Sigeth) (working name), a self-host
 | `crds/` | Generated CustomResourceDefinitions. Other repos (Helm chart, Rust types via kopium) consume them from a tag. |
 | `schema/` | Generated JSON Schemas for `challenge.yaml` and catalog indexes, for editor completion and validation. |
 | `pkg/challenge` | Load, validate and default a challenge package. The operator and the CLI use the same code, so they agree on what a valid package is. |
+| `pkg/catalog` | Catalog indexes as OCI artifacts: build from published packages, pack, fetch and validate. |
 | `pkg/checkerio` | The checker contract: environment variables, targets file, JSON-lines task results. |
 | `pkg/ocipkg` | Challenge packages as OCI artifacts: pack, fetch, solution referrers, image pinning by digest (D38). |
 | `pkg/signing` | Sign and verify packages and catalog indexes: Sigstore bundles as OCI referrers, checked against a `TrustPolicy` (keys or keyless identities, D40). |
