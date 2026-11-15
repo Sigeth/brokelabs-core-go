@@ -96,6 +96,9 @@ type CatalogSourceStatus struct {
 	// IndexDigest is the digest of the last verified index.
 	// +optional
 	IndexDigest string `json:"indexDigest,omitempty"`
+	// Signer is the identity that signed the last verified index, if any.
+	// +optional
+	Signer string `json:"signer,omitempty"`
 	// Packages listed by the index.
 	// +optional
 	Packages []CatalogEntry `json:"packages,omitempty"`
@@ -112,6 +115,7 @@ type CatalogSourceStatus struct {
 // +kubebuilder:resource:scope=Cluster
 // +kubebuilder:printcolumn:name="Ref",type=string,JSONPath=`.spec.ref`
 // +kubebuilder:printcolumn:name="Ready",type=string,JSONPath=`.status.conditions[?(@.type=="Ready")].status`
+// +kubebuilder:printcolumn:name="Signer",type=string,JSONPath=`.status.signer`,priority=1
 // +kubebuilder:printcolumn:name="Last sync",type=date,JSONPath=`.status.lastSyncTime`
 type CatalogSource struct {
 	metav1.TypeMeta   `json:",inline"`

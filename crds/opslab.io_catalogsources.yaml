@@ -21,6 +21,10 @@ spec:
     - jsonPath: .status.conditions[?(@.type=="Ready")].status
       name: Ready
       type: string
+    - jsonPath: .status.signer
+      name: Signer
+      priority: 1
+      type: string
     - jsonPath: .status.lastSyncTime
       name: Last sync
       type: date
@@ -241,6 +245,10 @@ spec:
                   - versions
                   type: object
                 type: array
+              signer:
+                description: Signer is the identity that signed the last verified
+                  index, if any.
+                type: string
             type: object
         required:
         - spec
