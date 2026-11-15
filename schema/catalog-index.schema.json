@@ -100,15 +100,97 @@
         "ref": {
           "type": "string",
           "description": "Ref is the OCI reference of the package, pinned by digest\n(registry/repository@sha256:...)."
+        },
+        "permissions": {
+          "$ref": "#/$defs/RequiredPermissions",
+          "description": "Permissions the package needs, derived from it when the index was\nbuilt. The operator derives them again at install and refuses a package\nwhose permissions differ."
         }
       },
       "additionalProperties": false,
       "type": "object",
       "required": [
         "version",
-        "ref"
+        "ref",
+        "permissions"
       ],
       "description": "CatalogVersion is one published version of a package."
+    },
+    "RequiredPermissions": {
+      "properties": {
+        "runtimes": {
+          "items": {
+            "type": "string",
+            "enum": [
+              "pod",
+              "sysbox",
+              "vcluster",
+              "vm"
+            ]
+          },
+          "type": "array",
+          "description": "Runtimes used by the machines, sorted."
+        },
+        "cpu": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9]+(\\.[0-9]+)?(m|k|Ki|M|Mi|G|Gi|T|Ti)?$"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "description": "CPU requested by the machines of one instance."
+        },
+        "memory": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9]+(\\.[0-9]+)?(m|k|Ki|M|Mi|G|Gi|T|Ti)?$"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "description": "Memory requested by the machines of one instance."
+        },
+        "egress": {
+          "type": "string",
+          "enum": [
+            "none",
+            "internet",
+            "allowlist"
+          ],
+          "description": "Egress is the outbound network access of an instance."
+        },
+        "egressAllowlist": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "EgressAllowlist lists the host names reachable when egress is \"allowlist\".\n+optional"
+        },
+        "extraManifestKinds": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "description": "ExtraManifestKinds are the kinds created in the instance namespace by\nextraManifests, as \"Kind\" (core group) or \"Kind.group\", sorted.\n+optional"
+        },
+        "checkerImage": {
+          "type": "string",
+          "description": "CheckerImage is the custom checker, which runs with access to the\nmachines of the instance.\n+optional"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "runtimes",
+        "cpu",
+        "memory",
+        "egress"
+      ],
+      "description": "RequiredPermissions are what a package needs from the cluster."
     }
   }
 }

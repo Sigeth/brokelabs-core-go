@@ -21,6 +21,15 @@ type PlatformConfigSpec struct {
 	// Defaults to "none".
 	// +optional
 	AllowedEgress EgressMode `json:"allowedEgress,omitempty"`
+	// MaxInstanceResources caps the CPU and memory the machines of one
+	// instance may request. Empty fields set no cap.
+	// +optional
+	MaxInstanceResources *InstanceResources `json:"maxInstanceResources,omitempty"`
+	// AllowedExtraManifestKinds lists the kinds ("Kind" or "Kind.group")
+	// extraManifests may create. Empty allows DefaultExtraManifestKinds; "*"
+	// allows every namespaced kind.
+	// +optional
+	AllowedExtraManifestKinds []string `json:"allowedExtraManifestKinds,omitempty"`
 	// RegistryMirror is the in-cluster registry installed challenges and
 	// their images are mirrored to, e.g. "zot.opslab-system.svc:5000".
 	// +optional

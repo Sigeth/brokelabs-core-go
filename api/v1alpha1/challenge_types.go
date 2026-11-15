@@ -79,6 +79,9 @@ type ChallengeStatus struct {
 	// Package is the resolved and validated manifest.
 	// +optional
 	Package *ChallengePackage `json:"package,omitempty"`
+	// Permissions the installed package needs, derived from it.
+	// +optional
+	Permissions *RequiredPermissions `json:"permissions,omitempty"`
 	// FilesConfigMap is the ConfigMap, in the operator namespace, holding the
 	// files of the installed package (keys as in InlinePackage.FilesConfigMap).
 	// Its PackageDigestAnnotation equals Digest once the files are in place.

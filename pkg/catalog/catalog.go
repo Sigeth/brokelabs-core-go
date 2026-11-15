@@ -22,6 +22,7 @@ import (
 	"oras.land/oras-go/v2/content"
 
 	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
+	"github.com/Sigeth/opslab-core-go/pkg/challenge"
 	"github.com/Sigeth/opslab-core-go/pkg/ocipkg"
 	"github.com/Sigeth/opslab-core-go/pkg/project"
 )
@@ -51,10 +52,15 @@ func New() *v1alpha1.CatalogIndex {
 }
 
 // Add lists version pkg.Metadata.Version of a package, published at ref
-// (pinned by digest). The newest version gives the title, summary and tags
-// of the entry; versions stay sorted newest first. Adding a version again
-// with the same ref does nothing, with another ref is an error.
-func Add(idx *v1alpha1.CatalogIndex, pkg *v1alpha1.ChallengePackage, ref string) error {
+// (pinned by digest), with the permissions derived from it and its files.
+// The newest version gives the title, summary and tags of the entry; versions
+// stay sorted newest first. Adding a version again with the same ref does
+// nothing, with another ref is an error.
+func Add(idx *v1alpha1.CatalogIndex, pkg *v1alpha1.ChallengePackage, files map[string][]byte, ref string) error {
+	perms, err := challenge.Permissions(pkg, files)
+	if err != nil {
+		return fmt.Errorf("%s: %w", pkg.Metadata.Name, err)
+	}
 	version, err := semver.StrictNewVersion(pkg.Metadata.Version)
 	if err != nil {
 		return fmt.Errorf("%s: version %q: %w", pkg.Metadata.Name, pkg.Metadata.Version, err)
@@ -76,7 +82,7 @@ func Add(idx *v1alpha1.CatalogIndex, pkg *v1alpha1.ChallengePackage, ref string)
 			return fmt.Errorf("%s %s is already listed at %s", pkg.Metadata.Name, v.Version, v.Ref)
 		}
 	}
-	entry.Versions = append(entry.Versions, v1alpha1.CatalogVersion{Version: pkg.Metadata.Version, Ref: ref})
+	entry.Versions = append(entry.Versions, v1alpha1.CatalogVersion{Version: pkg.Metadata.Version, Ref: ref, Permissions: perms})
 	sortVersions(entry.Versions)
 	if entry.Versions[0].Version == version.Original() {
 		s := pkg.Spec
@@ -98,19 +104,19 @@ func sortVersions(versions []v1alpha1.CatalogVersion) {
 	})
 }
 
-// Find returns the ref of version of package name.
-func Find(packages []v1alpha1.CatalogEntry, name, version string) (string, bool) {
+// Find returns version of package name.
+func Find(packages []v1alpha1.CatalogEntry, name, version string) (v1alpha1.CatalogVersion, bool) {
 	for _, e := range packages {
 		if e.Name != name {
 			continue
 		}
 		for _, v := range e.Versions {
 			if v.Version == version {
-				return v.Ref, true
+				return v, true
 			}
 		}
 	}
-	return "", false
+	return v1alpha1.CatalogVersion{}, false
 }
 
 // Validate checks an index: header, unique DNS-label names, known categories
@@ -179,6 +185,9 @@ func validateVersions(versions []v1alpha1.CatalogVersion, fp *field.Path) field.
 		seen[v.Version] = true
 		if _, err := ocipkg.ParseImage(v.Ref); err != nil || !ocipkg.Pinned(v.Ref) {
 			errs = append(errs, field.Invalid(vp.Child("ref"), v.Ref, "must be an OCI reference pinned by digest (registry/repository@sha256:...)"))
+		}
+		if v.Permissions == nil {
+			errs = append(errs, field.Required(vp.Child("permissions"), "derived from the package when the index is built"))
 		}
 	}
 	return errs

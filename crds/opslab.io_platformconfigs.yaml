@@ -58,6 +58,14 @@ spec:
                 - internet
                 - allowlist
                 type: string
+              allowedExtraManifestKinds:
+                description: |-
+                  AllowedExtraManifestKinds lists the kinds ("Kind" or "Kind.group")
+                  extraManifests may create. Empty allows DefaultExtraManifestKinds; "*"
+                  allows every namespaced kind.
+                items:
+                  type: string
+                type: array
               allowedRuntimes:
                 description: |-
                   AllowedRuntimes restricts the runtimes challenges may use. Empty allows
@@ -76,6 +84,26 @@ spec:
                 description: MaxInstanceLifetime caps the lifetime of any instance,
                   extensions included.
                 type: string
+              maxInstanceResources:
+                description: |-
+                  MaxInstanceResources caps the CPU and memory the machines of one
+                  instance may request. Empty fields set no cap.
+                properties:
+                  cpu:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    description: CPU requested by the machines of one instance.
+                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                    x-kubernetes-int-or-string: true
+                  memory:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    description: Memory requested by the machines of one instance.
+                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                    x-kubernetes-int-or-string: true
+                type: object
               registryMirror:
                 description: |-
                   RegistryMirror is the in-cluster registry installed challenges and

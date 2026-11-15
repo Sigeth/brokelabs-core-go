@@ -35,7 +35,7 @@ func TestAddKeepsVersionsSortedAndTheNewestMetadata(t *testing.T) {
 		pkg("ssh-hardening", "1.2.0", "SSH v1.2"),
 		pkg("auditd-watch", "0.1.0", "Auditd"),
 	} {
-		if err := Add(idx, p, ref(p.Metadata.Name, p.Metadata.Version)); err != nil {
+		if err := Add(idx, p, nil, ref(p.Metadata.Name, p.Metadata.Version)); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -53,21 +53,21 @@ func TestAddKeepsVersionsSortedAndTheNewestMetadata(t *testing.T) {
 	if strings.Join(got, ",") != "1.10.0,1.2.0,1.0.0" || ssh.Title != "SSH v1.10" {
 		t.Fatalf("versions = %v, title = %q", got, ssh.Title)
 	}
-	if r, ok := Find(idx.Packages, "ssh-hardening", "1.2.0"); !ok || r != ref("ssh-hardening", "1.2.0") {
-		t.Fatalf("Find = %q, %v", r, ok)
+	if v, ok := Find(idx.Packages, "ssh-hardening", "1.2.0"); !ok || v.Ref != ref("ssh-hardening", "1.2.0") || v.Permissions == nil {
+		t.Fatalf("Find = %+v, %v", v, ok)
 	}
 	if _, ok := Find(idx.Packages, "ssh-hardening", "9.9.9"); ok {
 		t.Fatal("found a version that is not listed")
 	}
 
 	// Same version: idempotent with the same ref, refused with another.
-	if err := Add(idx, pkg("ssh-hardening", "1.2.0", "x"), ref("ssh-hardening", "1.2.0")); err != nil {
+	if err := Add(idx, pkg("ssh-hardening", "1.2.0", "x"), nil, ref("ssh-hardening", "1.2.0")); err != nil {
 		t.Fatal(err)
 	}
-	if err := Add(idx, pkg("ssh-hardening", "1.2.0", "x"), ref("other", "1")); err == nil {
+	if err := Add(idx, pkg("ssh-hardening", "1.2.0", "x"), nil, ref("other", "1")); err == nil {
 		t.Fatal("a version cannot move to another digest")
 	}
-	if err := Add(idx, pkg("x", "1.0.0", "x"), "ghcr.io/x/y:1.0.0"); err == nil {
+	if err := Add(idx, pkg("x", "1.0.0", "x"), nil, "ghcr.io/x/y:1.0.0"); err == nil {
 		t.Fatal("refs must be pinned")
 	}
 }
@@ -75,8 +75,8 @@ func TestAddKeepsVersionsSortedAndTheNewestMetadata(t *testing.T) {
 func TestValidate(t *testing.T) {
 	valid := func() *v1alpha1.CatalogIndex {
 		idx := New()
-		_ = Add(idx, pkg("ssh-hardening", "1.0.0", "SSH"), ref("ssh-hardening", "1.0.0"))
-		_ = Add(idx, pkg("ssh-hardening", "1.1.0", "SSH"), ref("ssh-hardening", "1.1.0"))
+		_ = Add(idx, pkg("ssh-hardening", "1.0.0", "SSH"), nil, ref("ssh-hardening", "1.0.0"))
+		_ = Add(idx, pkg("ssh-hardening", "1.1.0", "SSH"), nil, ref("ssh-hardening", "1.1.0"))
 		return idx
 	}
 	cases := map[string]struct {
@@ -92,7 +92,8 @@ func TestValidate(t *testing.T) {
 			v := i.Packages[0].Versions
 			v[0], v[1] = v[1], v[0]
 		}, "newest first"},
-		"unpinned": {func(i *v1alpha1.CatalogIndex) { i.Packages[0].Versions[0].Ref = "ghcr.io/x/y:1.1.0" }, "pinned"},
+		"unpinned":       {func(i *v1alpha1.CatalogIndex) { i.Packages[0].Versions[0].Ref = "ghcr.io/x/y:1.1.0" }, "pinned"},
+		"no permissions": {func(i *v1alpha1.CatalogIndex) { i.Packages[0].Versions[0].Permissions = nil }, "permissions"},
 	}
 	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
@@ -109,7 +110,7 @@ func TestValidate(t *testing.T) {
 func TestPackFetchRoundTrip(t *testing.T) {
 	ctx := context.Background()
 	idx := New()
-	if err := Add(idx, pkg("ssh-hardening", "1.0.0", "SSH"), ref("ssh-hardening", "1.0.0")); err != nil {
+	if err := Add(idx, pkg("ssh-hardening", "1.0.0", "SSH"), nil, ref("ssh-hardening", "1.0.0")); err != nil {
 		t.Fatal(err)
 	}
 	store := memory.New()

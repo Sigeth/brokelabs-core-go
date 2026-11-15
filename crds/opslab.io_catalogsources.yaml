@@ -223,6 +223,72 @@ spec:
                         description: CatalogVersion is one published version of a
                           package.
                         properties:
+                          permissions:
+                            description: |-
+                              Permissions the package needs, derived from it when the index was
+                              built. The operator derives them again at install and refuses a package
+                              whose permissions differ.
+                            properties:
+                              checkerImage:
+                                description: |-
+                                  CheckerImage is the custom checker, which runs with access to the
+                                  machines of the instance.
+                                type: string
+                              cpu:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                description: CPU requested by the machines of one
+                                  instance.
+                                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                x-kubernetes-int-or-string: true
+                              egress:
+                                description: Egress is the outbound network access
+                                  of an instance.
+                                enum:
+                                - none
+                                - internet
+                                - allowlist
+                                type: string
+                              egressAllowlist:
+                                description: EgressAllowlist lists the host names
+                                  reachable when egress is "allowlist".
+                                items:
+                                  type: string
+                                type: array
+                              extraManifestKinds:
+                                description: |-
+                                  ExtraManifestKinds are the kinds created in the instance namespace by
+                                  extraManifests, as "Kind" (core group) or "Kind.group", sorted.
+                                items:
+                                  type: string
+                                type: array
+                              memory:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                description: Memory requested by the machines of one
+                                  instance.
+                                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                x-kubernetes-int-or-string: true
+                              runtimes:
+                                description: Runtimes used by the machines, sorted.
+                                items:
+                                  description: Runtime is the isolation technology
+                                    a machine runs on.
+                                  enum:
+                                  - pod
+                                  - sysbox
+                                  - vcluster
+                                  - vm
+                                  type: string
+                                type: array
+                            required:
+                            - cpu
+                            - egress
+                            - memory
+                            - runtimes
+                            type: object
                           ref:
                             description: |-
                               Ref is the OCI reference of the package, pinned by digest
@@ -232,6 +298,7 @@ spec:
                             description: Version (semver).
                             type: string
                         required:
+                        - permissions
                         - ref
                         - version
                         type: object

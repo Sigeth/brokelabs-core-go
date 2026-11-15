@@ -46,6 +46,10 @@ type CatalogVersion struct {
 	// Ref is the OCI reference of the package, pinned by digest
 	// (registry/repository@sha256:...).
 	Ref string `json:"ref"`
+	// Permissions the package needs, derived from it when the index was
+	// built. The operator derives them again at install and refuses a package
+	// whose permissions differ.
+	Permissions *RequiredPermissions `json:"permissions"`
 }
 
 // TrustPolicy lists the signers whose packages are accepted.
