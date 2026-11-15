@@ -178,7 +178,7 @@ func fetchManifest(ctx context.Context, src content.Fetcher, desc ocispec.Descri
 		return nil, nil, fmt.Errorf("manifest %s has media type %q, want an OCI image manifest", desc.Digest, manifest.MediaType)
 	}
 	if manifest.ArtifactType != artifactType {
-		return nil, nil, fmt.Errorf("%s is not a %s artifact (artifact type %q)", desc.Digest, project.Name, manifest.ArtifactType)
+		return nil, nil, fmt.Errorf("%s is not a %s (artifact type %q)", desc.Digest, artifactName(artifactType), manifest.ArtifactType)
 	}
 	return &manifest, data, nil
 }
@@ -207,4 +207,12 @@ func fetchBlob(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor
 		return nil, fmt.Errorf("%s: only sha256 digests are accepted", desc.Digest)
 	}
 	return content.FetchAll(ctx, src, desc)
+}
+
+// artifactName names an artifact type in messages.
+func artifactName(artifactType string) string {
+	if artifactType == SolutionArtifactType {
+		return "challenge solution"
+	}
+	return "challenge package"
 }

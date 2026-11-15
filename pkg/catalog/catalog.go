@@ -250,7 +250,7 @@ func Fetch(ctx context.Context, src content.Fetcher, desc ocispec.Descriptor) (*
 		return nil, fmt.Errorf("decoding manifest %s: %w", desc.Digest, err)
 	}
 	if manifest.ArtifactType != ArtifactType || manifest.Config.MediaType != ConfigMediaType {
-		return nil, fmt.Errorf("%s is not a %s catalog index (artifact type %q)", desc.Digest, project.Name, manifest.ArtifactType)
+		return nil, fmt.Errorf("%s is not a catalog index (artifact type %q)", desc.Digest, manifest.ArtifactType)
 	}
 	if manifest.Config.Size > MaxIndexSize {
 		return nil, fmt.Errorf("the index is %d bytes, more than the %d allowed", manifest.Config.Size, MaxIndexSize)
