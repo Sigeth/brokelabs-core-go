@@ -659,7 +659,11 @@
         },
         "points": {
           "type": "integer",
-          "description": "Points awarded when the task is solved.\n+kubebuilder:validation:Minimum=0"
+          "description": "Points awarded when the task is solved. Guards have none.\n+kubebuilder:validation:Minimum=0"
+        },
+        "guard": {
+          "type": "boolean",
+          "description": "Guard marks a task that is true from the start and must stay true,\ne.g. \"you can still log in with your key\": it fails when the student\nbreaks something while solving the others. Guards are worth 0 points,\nand \"opslab challenge test\" expects them to pass before and after the\nsolution.\n+optional"
         },
         "hints": {
           "items": {

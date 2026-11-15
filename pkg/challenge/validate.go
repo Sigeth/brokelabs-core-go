@@ -232,6 +232,9 @@ func (v *validator) tasks(tasks []v1alpha1.Task, fp *field.Path, customChecker b
 		}
 		ids[t.ID] = true
 		v.required(tp.Child("title"), t.Title)
+		if t.Guard && t.Points != 0 {
+			v.add(field.Invalid(tp.Child("points"), t.Points, "guards are true from the start: they are worth 0 points"))
+		}
 		if t.Points < 0 {
 			v.add(field.Invalid(tp.Child("points"), t.Points, "must not be negative"))
 		}

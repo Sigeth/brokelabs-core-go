@@ -254,9 +254,16 @@ type Task struct {
 	ID string `json:"id"`
 	// Title shown to the student.
 	Title string `json:"title"`
-	// Points awarded when the task is solved.
+	// Points awarded when the task is solved. Guards have none.
 	// +kubebuilder:validation:Minimum=0
 	Points int32 `json:"points"`
+	// Guard marks a task that is true from the start and must stay true,
+	// e.g. "you can still log in with your key": it fails when the student
+	// breaks something while solving the others. Guards are worth 0 points,
+	// and "opslab challenge test" expects them to pass before and after the
+	// solution.
+	// +optional
+	Guard bool `json:"guard,omitempty"`
 	// Hints the student can reveal, in order.
 	// +optional
 	// +kubebuilder:validation:MaxItems=8

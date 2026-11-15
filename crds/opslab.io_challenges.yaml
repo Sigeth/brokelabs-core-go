@@ -595,6 +595,14 @@ spec:
                                           + (has(self.port) ? 1 : 0) + (has(self.http)
                                           ? 1 : 0) + (has(self.kubeCEL) ? 1 : 0) +
                                           (has(self.goss) ? 1 : 0) == 1'
+                                    guard:
+                                      description: |-
+                                        Guard marks a task that is true from the start and must stay true,
+                                        e.g. "you can still log in with your key": it fails when the student
+                                        breaks something while solving the others. Guards are worth 0 points,
+                                        and "opslab challenge test" expects them to pass before and after the
+                                        solution.
+                                      type: boolean
                                     hints:
                                       description: Hints the student can reveal, in
                                         order.
@@ -622,7 +630,7 @@ spec:
                                       type: string
                                     points:
                                       description: Points awarded when the task is
-                                        solved.
+                                        solved. Guards have none.
                                       format: int32
                                       minimum: 0
                                       type: integer
@@ -1308,6 +1316,14 @@ spec:
                                   ? 1 : 0) + (has(self.sshLogin) ? 1 : 0) + (has(self.port)
                                   ? 1 : 0) + (has(self.http) ? 1 : 0) + (has(self.kubeCEL)
                                   ? 1 : 0) + (has(self.goss) ? 1 : 0) == 1'
+                            guard:
+                              description: |-
+                                Guard marks a task that is true from the start and must stay true,
+                                e.g. "you can still log in with your key": it fails when the student
+                                breaks something while solving the others. Guards are worth 0 points,
+                                and "opslab challenge test" expects them to pass before and after the
+                                solution.
+                              type: boolean
                             hints:
                               description: Hints the student can reveal, in order.
                               items:
@@ -1333,6 +1349,7 @@ spec:
                               type: string
                             points:
                               description: Points awarded when the task is solved.
+                                Guards have none.
                               format: int32
                               minimum: 0
                               type: integer

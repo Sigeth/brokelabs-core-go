@@ -53,6 +53,13 @@ func TestValidateErrors(t *testing.T) {
 		{name: "unknown category", mutate: func(p *v1alpha1.ChallengePackage) { p.Spec.Category = "cloud" }, want: "spec.category"},
 		{name: "bad platform constraint", mutate: func(p *v1alpha1.ChallengePackage) { p.Spec.Requires.Platform = "latest!" }, want: "spec.requires.platform"},
 		{
+			name: "guard with points",
+			mutate: func(p *v1alpha1.ChallengePackage) {
+				p.Spec.Tasks[0].Guard = true
+			},
+			want: "spec.tasks[0].points",
+		},
+		{
 			name: "allowlist without hosts",
 			mutate: func(p *v1alpha1.ChallengePackage) {
 				p.Spec.Permissions.Egress = v1alpha1.EgressAllowlist
