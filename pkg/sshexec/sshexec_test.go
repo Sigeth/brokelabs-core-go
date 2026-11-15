@@ -216,3 +216,24 @@ func TestKnownHostsLineWithDefaultPort(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestRunThroughACustomDialer(t *testing.T) {
+	user := mustKey(t)
+	srv := newServer(t, "checker", user)
+	dialed := false
+	req := Request{
+		// The host key is looked up under Addr, whatever Dial connects to.
+		Addr: "machine.example:22", User: "checker", PrivateKey: user.Private,
+		KnownHosts: knownHosts(t, "machine.example:22", srv.hostKey),
+		Command:    "echo", Stdin: strings.NewReader("tunnel"),
+		Dial: func(ctx context.Context) (net.Conn, error) {
+			dialed = true
+			var d net.Dialer
+			return d.DialContext(ctx, "tcp", srv.addr)
+		},
+	}
+	res, err := New().Run(context.Background(), req)
+	if err != nil || !dialed || string(res.Stdout) != "tunnel" {
+		t.Fatalf("result = %+v, dialed = %v, %v", res, dialed, err)
+	}
+}

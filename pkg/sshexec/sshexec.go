@@ -41,6 +41,9 @@ type Request struct {
 	Stdin io.Reader
 	// ConnectTimeout defaults to DefaultConnectTimeout.
 	ConnectTimeout time.Duration
+	// Dial opens the connection instead of the network, e.g. a tunnel
+	// through the Kubernetes API server. Addr still selects the host key.
+	Dial func(ctx context.Context) (net.Conn, error)
 }
 
 // Result of a command that ran.
@@ -159,8 +162,15 @@ func connect(ctx context.Context, req Request) (*ssh.Client, error) {
 		Timeout:           timeout,
 	}
 
-	dialer := net.Dialer{Timeout: timeout}
-	conn, err := dialer.DialContext(ctx, "tcp", req.Addr)
+	dialCtx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	var conn net.Conn
+	if req.Dial != nil {
+		conn, err = req.Dial(dialCtx)
+	} else {
+		dialer := net.Dialer{Timeout: timeout}
+		conn, err = dialer.DialContext(dialCtx, "tcp", req.Addr)
+	}
 	if err != nil {
 		return nil, err
 	}
