@@ -11,7 +11,7 @@ import (
 	"slices"
 	"time"
 
-	"github.com/Sigeth/opslab-core-go/pkg/challenge"
+	"github.com/Sigeth/brokelabs-core-go/pkg/challenge"
 )
 
 // archive writes files as a reproducible tar+gzip archive: sorted entries,

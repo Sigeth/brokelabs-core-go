@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.23.0
-  name: catalogsources.opslab.io
+  name: catalogsources.brokelabs.io
 spec:
-  group: opslab.io
+  group: brokelabs.io
   names:
     kind: CatalogSource
     listKind: CatalogSourceList
@@ -56,7 +56,7 @@ spec:
               trusted.
             properties:
               ref:
-                description: Ref is the OCI reference of the catalog index, e.g. "ghcr.io/sigeth/opslab-catalog:latest".
+                description: Ref is the OCI reference of the catalog index, e.g. "ghcr.io/sigeth/brokelabs-catalog:latest".
                 type: string
               suspend:
                 description: Suspend stops syncing the source.
@@ -85,7 +85,7 @@ spec:
                         subjectRegExp:
                           description: |-
                             SubjectRegExp matches the certificate subject, e.g.
-                            "^https://github.com/Sigeth/opslab-challenge-.*/.github/workflows/release.yaml@.*$".
+                            "^https://github.com/Sigeth/brokelabs-challenge-.*/.github/workflows/release.yaml@.*$".
                           type: string
                       required:
                       - issuer

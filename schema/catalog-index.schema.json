@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Sigeth/opslab-core-go/main/schema/catalog-index.schema.json",
+  "$id": "https://raw.githubusercontent.com/Sigeth/brokelabs-core-go/main/schema/catalog-index.schema.json",
   "$ref": "#/$defs/CatalogIndex",
   "$defs": {
     "CatalogEntry": {
@@ -66,8 +66,8 @@
       "properties": {
         "apiVersion": {
           "type": "string",
-          "const": "opslab.io/v1alpha1",
-          "description": "APIVersion must be \"opslab.io/v1alpha1\"."
+          "const": "brokelabs.io/v1alpha1",
+          "description": "APIVersion must be \"brokelabs.io/v1alpha1\"."
         },
         "kind": {
           "type": "string",

@@ -10,7 +10,7 @@ const CatalogIndexKind = "CatalogIndex"
 // CatalogIndex is the document a catalog publishes (as a signed OCI
 // artifact) to list its packages. It is not a Kubernetes resource.
 type CatalogIndex struct {
-	// APIVersion must be "opslab.io/v1alpha1".
+	// APIVersion must be "brokelabs.io/v1alpha1".
 	APIVersion string `json:"apiVersion"`
 	// Kind must be "CatalogIndex".
 	Kind string `json:"kind"`
@@ -71,13 +71,13 @@ type KeylessIdentity struct {
 	// Issuer is the OIDC issuer, e.g. "https://token.actions.githubusercontent.com".
 	Issuer string `json:"issuer"`
 	// SubjectRegExp matches the certificate subject, e.g.
-	// "^https://github.com/Sigeth/opslab-challenge-.*/.github/workflows/release.yaml@.*$".
+	// "^https://github.com/Sigeth/brokelabs-challenge-.*/.github/workflows/release.yaml@.*$".
 	SubjectRegExp string `json:"subjectRegExp"`
 }
 
 // CatalogSourceSpec defines where a catalog lives and who is trusted.
 type CatalogSourceSpec struct {
-	// Ref is the OCI reference of the catalog index, e.g. "ghcr.io/sigeth/opslab-catalog:latest".
+	// Ref is the OCI reference of the catalog index, e.g. "ghcr.io/sigeth/brokelabs-catalog:latest".
 	Ref string `json:"ref"`
 	// Trust lists the signers whose index and packages are accepted.
 	Trust TrustPolicy `json:"trust"`

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
 )
 
 func TestRoundTrip(t *testing.T) {

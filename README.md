@@ -1,8 +1,6 @@
-# opslab-core-go
+# brokelabs-core-go
 
-The contracts of [opslab](https://github.com/Sigeth) (working name), a self-hosted platform of hands-on DevOps security challenges on Kubernetes, plus the Go libraries shared by the operator, the CLI and the checker.
-
-> `opslab` is a working name and will change.
+The contracts of [BrokeLabs](https://github.com/Sigeth), a self-hosted platform of hands-on DevOps security challenges on Kubernetes, plus the Go libraries shared by the operator, the CLI and the checker.
 
 ## Contents
 
@@ -25,7 +23,7 @@ The contracts of [opslab](https://github.com/Sigeth) (working name), a self-host
 Add this first line to get completion and validation in editors that use the YAML language server (VS Code, Neovim, JetBrains…):
 
 ```yaml
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Sigeth/opslab-core-go/main/schema/challenge-package.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Sigeth/brokelabs-core-go/main/schema/challenge-package.schema.json
 ```
 
 Examples: [`pkg/challenge/testdata`](pkg/challenge/testdata).
@@ -40,7 +38,7 @@ make lint test
 kubectl apply --server-side -f crds/ && kubectl apply -f samples/
 ```
 
-Changing a contract: edit `api/v1alpha1`, run `make generate`, update `pkg/challenge` validation and its tests, then tag a release. `opslab-core-rs` regenerates its Rust types from the tagged `crds/`.
+Changing a contract: edit `api/v1alpha1`, run `make generate`, update `pkg/challenge` validation and its tests, then tag a release. `brokelabs-core-rs` regenerates its Rust types from the tagged `crds/`.
 
 ## License
 

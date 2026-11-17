@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.23.0
-  name: checkruns.opslab.io
+  name: checkruns.brokelabs.io
 spec:
-  group: opslab.io
+  group: brokelabs.io
   names:
     kind: CheckRun
     listKind: CheckRunList

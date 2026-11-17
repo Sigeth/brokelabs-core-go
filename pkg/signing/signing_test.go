@@ -12,7 +12,7 @@ import (
 
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
 )
 
 var artifact = []byte(`{"schemaVersion":2,"mediaType":"application/vnd.oci.image.manifest.v1+json"}`)
@@ -96,7 +96,7 @@ func TestKeylessSignatures(t *testing.T) {
 	}
 	const (
 		issuer   = "https://token.actions.githubusercontent.com"
-		identity = "https://github.com/Sigeth/opslab-challenges/.github/workflows/release.yaml@refs/tags/ssh-hardening/v1.0.0"
+		identity = "https://github.com/Sigeth/brokelabs-challenges/.github/workflows/release.yaml@refs/tags/ssh-hardening/v1.0.0"
 	)
 	entity, err := vs.Sign(identity, issuer, artifact)
 	if err != nil {
@@ -108,7 +108,7 @@ func TestKeylessSignatures(t *testing.T) {
 	}
 	v := Verifier{TrustedRoot: vs, WithoutSCTs: true} // the test CA has no CT log
 	trusted := v1alpha1.TrustPolicy{Keyless: []v1alpha1.KeylessIdentity{
-		{Issuer: issuer, SubjectRegExp: `^https://github\.com/Sigeth/opslab-challenges/\.github/workflows/release\.yaml@.*$`},
+		{Issuer: issuer, SubjectRegExp: `^https://github\.com/Sigeth/brokelabs-challenges/\.github/workflows/release\.yaml@.*$`},
 	}}
 	signer, err := v.verifyEntity(trusted, artifact, entity)
 	if err != nil || signer != identity+" ("+issuer+")" {

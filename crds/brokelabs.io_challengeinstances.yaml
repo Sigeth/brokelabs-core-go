@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.23.0
-  name: challengeinstances.opslab.io
+  name: challengeinstances.brokelabs.io
 spec:
-  group: opslab.io
+  group: brokelabs.io
   names:
     kind: ChallengeInstance
     listKind: ChallengeInstanceList

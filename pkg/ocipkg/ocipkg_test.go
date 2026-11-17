@@ -19,8 +19,8 @@ import (
 	"oras.land/oras-go/v2/content/memory"
 	"oras.land/oras-go/v2/registry"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
-	"github.com/Sigeth/opslab-core-go/pkg/challenge"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/pkg/challenge"
 )
 
 func testPackage(t *testing.T) (*v1alpha1.ChallengePackage, map[string][]byte) {
@@ -167,7 +167,7 @@ func TestFetchRejectsBadArtifacts(t *testing.T) {
 		want         string
 	}{
 		"wrong artifact type": {"application/vnd.example", config, tarball(t), "artifact type"},
-		"unknown field":       {ArtifactType, []byte(`{"apiVersion":"opslab.io/v1alpha1","kind":"ChallengePackage","bogus":1}`), tarball(t), "bogus"},
+		"unknown field":       {ArtifactType, []byte(`{"apiVersion":"brokelabs.io/v1alpha1","kind":"ChallengePackage","bogus":1}`), tarball(t), "bogus"},
 		"path traversal":      {ArtifactType, config, tarball(t, reg("../etc/passwd")), "inside the package"},
 		"absolute path":       {ArtifactType, config, tarball(t, reg("/etc/passwd")), "inside the package"},
 		"symlink":             {ArtifactType, config, tarball(t, &tar.Header{Typeflag: tar.TypeSymlink, Name: "setup/x", Linkname: "/etc/shadow"}), "regular files"},

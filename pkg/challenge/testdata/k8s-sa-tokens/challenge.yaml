@@ -1,4 +1,4 @@
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: ChallengePackage
 metadata:
   name: k8s-sa-tokens
@@ -15,7 +15,7 @@ spec:
       seed: [setup/manifests]
     - name: workstation
       runtime: pod
-      image: ghcr.io/sigeth/opslab-workstation-k8s@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/sigeth/brokelabs-workstation-k8s@sha256:0000000000000000000000000000000000000000000000000000000000000000
       kubeconfigFor: cluster
   access:
     terminals:

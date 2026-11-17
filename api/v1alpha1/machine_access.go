@@ -1,6 +1,6 @@
 package v1alpha1
 
-import "github.com/Sigeth/opslab-core-go/pkg/project"
+import "github.com/Sigeth/brokelabs-core-go/pkg/project"
 
 // Access to vm machines. The operator creates both users through cloud-init
 // at boot (any image meeting the base image contract can do it) and keeps

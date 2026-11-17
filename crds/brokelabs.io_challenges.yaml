@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.23.0
-  name: challenges.opslab.io
+  name: challenges.brokelabs.io
 spec:
-  group: opslab.io
+  group: brokelabs.io
   names:
     kind: Challenge
     listKind: ChallengeList
@@ -94,7 +94,7 @@ spec:
                         description: Package is the challenge manifest.
                         properties:
                           apiVersion:
-                            description: APIVersion must be "opslab.io/v1alpha1".
+                            description: APIVersion must be "brokelabs.io/v1alpha1".
                             type: string
                           kind:
                             description: Kind must be "ChallengePackage".
@@ -600,7 +600,7 @@ spec:
                                         Guard marks a task that is true from the start and must stay true,
                                         e.g. "you can still log in with your key": it fails when the student
                                         breaks something while solving the others. Guards are worth 0 points,
-                                        and "opslab challenge test" expects them to pass before and after the
+                                        and "brokelabs challenge test" expects them to pass before and after the
                                         solution.
                                       type: boolean
                                     hints:
@@ -714,7 +714,7 @@ spec:
                                 subjectRegExp:
                                   description: |-
                                     SubjectRegExp matches the certificate subject, e.g.
-                                    "^https://github.com/Sigeth/opslab-challenge-.*/.github/workflows/release.yaml@.*$".
+                                    "^https://github.com/Sigeth/brokelabs-challenge-.*/.github/workflows/release.yaml@.*$".
                                   type: string
                               required:
                               - issuer
@@ -831,7 +831,7 @@ spec:
                 description: Package is the resolved and validated manifest.
                 properties:
                   apiVersion:
-                    description: APIVersion must be "opslab.io/v1alpha1".
+                    description: APIVersion must be "brokelabs.io/v1alpha1".
                     type: string
                   kind:
                     description: Kind must be "ChallengePackage".
@@ -1321,7 +1321,7 @@ spec:
                                 Guard marks a task that is true from the start and must stay true,
                                 e.g. "you can still log in with your key": it fails when the student
                                 breaks something while solving the others. Guards are worth 0 points,
-                                and "opslab challenge test" expects them to pass before and after the
+                                and "brokelabs challenge test" expects them to pass before and after the
                                 solution.
                               type: boolean
                             hints:

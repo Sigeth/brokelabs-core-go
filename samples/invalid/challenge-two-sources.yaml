@@ -1,5 +1,5 @@
 # Rejected: a challenge has exactly one source.
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: Challenge
 metadata: {name: two-sources}
 spec:

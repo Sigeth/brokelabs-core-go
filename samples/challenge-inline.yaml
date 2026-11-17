@@ -1,5 +1,5 @@
 # Local development only: inline packages are not signed.
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: Challenge
 metadata:
   name: hello-shell
@@ -7,7 +7,7 @@ spec:
   source:
     inline:
       package:
-        apiVersion: opslab.io/v1alpha1
+        apiVersion: brokelabs.io/v1alpha1
         kind: ChallengePackage
         metadata: {name: hello-shell, version: 0.1.0}
         spec:
@@ -23,8 +23,8 @@ spec:
             terminals: [{machine: box}]
           tasks:
             - id: hello-file
-              title: Create /tmp/hello containing "opslab"
+              title: Create /tmp/hello containing "brokelabs"
               points: 1
               check:
                 machine: box
-                file: {path: /tmp/hello, contains: opslab}
+                file: {path: /tmp/hello, contains: brokelabs}

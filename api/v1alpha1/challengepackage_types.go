@@ -12,7 +12,7 @@ const ChallengePackageKind = "ChallengePackage"
 // Kubernetes resource: it ships inside a challenge OCI artifact and is embedded
 // in Challenge objects once installed.
 type ChallengePackage struct {
-	// APIVersion must be "opslab.io/v1alpha1".
+	// APIVersion must be "brokelabs.io/v1alpha1".
 	APIVersion string `json:"apiVersion"`
 	// Kind must be "ChallengePackage".
 	Kind string `json:"kind"`
@@ -260,7 +260,7 @@ type Task struct {
 	// Guard marks a task that is true from the start and must stay true,
 	// e.g. "you can still log in with your key": it fails when the student
 	// breaks something while solving the others. Guards are worth 0 points,
-	// and "opslab challenge test" expects them to pass before and after the
+	// and "brokelabs challenge test" expects them to pass before and after the
 	// solution.
 	// +optional
 	Guard bool `json:"guard,omitempty"`

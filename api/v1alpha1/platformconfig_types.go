@@ -31,7 +31,7 @@ type PlatformConfigSpec struct {
 	// +optional
 	AllowedExtraManifestKinds []string `json:"allowedExtraManifestKinds,omitempty"`
 	// RegistryMirror is the in-cluster registry installed challenges and
-	// their images are mirrored to, e.g. "zot.opslab-system.svc:5000".
+	// their images are mirrored to, e.g. "zot.brokelabs-system.svc:5000".
 	// +optional
 	RegistryMirror string `json:"registryMirror,omitempty"`
 }
@@ -82,7 +82,7 @@ type PlatformConfigStatus struct {
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
-// PlatformConfig is the cluster-wide configuration of opslab. Only one, named
+// PlatformConfig is the cluster-wide configuration of BrokeLabs. Only one, named
 // "default", may exist.
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status

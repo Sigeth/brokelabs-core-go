@@ -46,7 +46,7 @@ const (
 // Difficulties lists every difficulty, easiest first.
 var Difficulties = []Difficulty{DifficultyEasy, DifficultyMedium, DifficultyHard, DifficultyInsane}
 
-// ConditionReady is the condition type every opslab resource reports.
+// ConditionReady is the condition type every BrokeLabs resource reports.
 const ConditionReady = "Ready"
 
 // TaskResult is the outcome of checking one task. Checkers print one JSON

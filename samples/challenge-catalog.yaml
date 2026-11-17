@@ -1,4 +1,4 @@
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: Challenge
 metadata:
   name: ssh-hardening-101

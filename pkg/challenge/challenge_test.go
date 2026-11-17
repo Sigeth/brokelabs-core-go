@@ -8,7 +8,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
 )
 
 func load(t *testing.T, dir string) *v1alpha1.ChallengePackage {
@@ -32,7 +32,7 @@ func TestExamplesAreValid(t *testing.T) {
 }
 
 func TestParseRejectsUnknownFields(t *testing.T) {
-	_, err := Parse([]byte("apiVersion: opslab.io/v1alpha1\nkind: ChallengePackage\nspec:\n  titel: typo\n"))
+	_, err := Parse([]byte("apiVersion: brokelabs.io/v1alpha1\nkind: ChallengePackage\nspec:\n  titel: typo\n"))
 	if err == nil || !strings.Contains(err.Error(), "titel") {
 		t.Fatalf("expected an unknown field error, got %v", err)
 	}

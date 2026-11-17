@@ -16,14 +16,14 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
 )
 
 // Environment variables set on checker containers.
 const (
-	EnvTasks       = "OPSLAB_TASKS"
-	EnvTargetsFile = "OPSLAB_TARGETS_FILE"
-	EnvPackageDir  = "OPSLAB_PACKAGE_DIR"
+	EnvTasks       = "BROKELABS_TASKS"
+	EnvTargetsFile = "BROKELABS_TARGETS_FILE"
+	EnvPackageDir  = "BROKELABS_PACKAGE_DIR"
 )
 
 // Targets describes how the checker reaches the machines of an instance.

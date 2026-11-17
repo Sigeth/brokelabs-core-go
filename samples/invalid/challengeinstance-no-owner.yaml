@@ -1,5 +1,5 @@
 # Rejected: an instance needs an owner.
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: ChallengeInstance
-metadata: {name: no-owner, namespace: opslab-instances}
+metadata: {name: no-owner, namespace: brokelabs-instances}
 spec: {challenge: hello-shell}

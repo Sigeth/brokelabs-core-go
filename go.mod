@@ -1,4 +1,4 @@
-module github.com/Sigeth/opslab-core-go
+module github.com/Sigeth/brokelabs-core-go
 
 go 1.27.0
 

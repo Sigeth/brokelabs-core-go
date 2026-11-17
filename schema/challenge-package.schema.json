@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Sigeth/opslab-core-go/main/schema/challenge-package.schema.json",
+  "$id": "https://raw.githubusercontent.com/Sigeth/brokelabs-core-go/main/schema/challenge-package.schema.json",
   "$ref": "#/$defs/ChallengePackage",
   "$defs": {
     "Access": {
@@ -52,8 +52,8 @@
       "properties": {
         "apiVersion": {
           "type": "string",
-          "const": "opslab.io/v1alpha1",
-          "description": "APIVersion must be \"opslab.io/v1alpha1\"."
+          "const": "brokelabs.io/v1alpha1",
+          "description": "APIVersion must be \"brokelabs.io/v1alpha1\"."
         },
         "kind": {
           "type": "string",
@@ -663,7 +663,7 @@
         },
         "guard": {
           "type": "boolean",
-          "description": "Guard marks a task that is true from the start and must stay true,\ne.g. \"you can still log in with your key\": it fails when the student\nbreaks something while solving the others. Guards are worth 0 points,\nand \"opslab challenge test\" expects them to pass before and after the\nsolution.\n+optional"
+          "description": "Guard marks a task that is true from the start and must stay true,\ne.g. \"you can still log in with your key\": it fails when the student\nbreaks something while solving the others. Guards are worth 0 points,\nand \"brokelabs challenge test\" expects them to pass before and after the\nsolution.\n+optional"
         },
         "hints": {
           "items": {

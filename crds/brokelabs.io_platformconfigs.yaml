@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.23.0
-  name: platformconfigs.opslab.io
+  name: platformconfigs.brokelabs.io
 spec:
-  group: opslab.io
+  group: brokelabs.io
   names:
     kind: PlatformConfig
     listKind: PlatformConfigList
@@ -25,7 +25,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: |-
-          PlatformConfig is the cluster-wide configuration of opslab. Only one, named
+          PlatformConfig is the cluster-wide configuration of BrokeLabs. Only one, named
           "default", may exist.
         properties:
           apiVersion:
@@ -107,7 +107,7 @@ spec:
               registryMirror:
                 description: |-
                   RegistryMirror is the in-cluster registry installed challenges and
-                  their images are mirrored to, e.g. "zot.opslab-system.svc:5000".
+                  their images are mirrored to, e.g. "zot.brokelabs-system.svc:5000".
                 type: string
             type: object
           status:

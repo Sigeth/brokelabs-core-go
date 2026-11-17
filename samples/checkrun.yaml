@@ -1,7 +1,7 @@
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: CheckRun
 metadata:
   name: hello-shell-alice-1
-  namespace: opslab-instances
+  namespace: brokelabs-instances
 spec:
   instance: hello-shell-alice

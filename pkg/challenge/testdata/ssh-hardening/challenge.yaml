@@ -1,4 +1,4 @@
-apiVersion: opslab.io/v1alpha1
+apiVersion: brokelabs.io/v1alpha1
 kind: ChallengePackage
 metadata:
   name: ssh-hardening-101
@@ -24,12 +24,12 @@ spec:
   machines:
     - name: server
       runtime: vm
-      image: ghcr.io/sigeth/opslab-images/ubuntu-24.04-base@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/sigeth/brokelabs-images/ubuntu-24.04-base@sha256:0000000000000000000000000000000000000000000000000000000000000000
       resources: {cpu: "1", memory: 1Gi}
       setup: [setup/break-ssh.sh]
     - name: workstation
       runtime: pod
-      image: ghcr.io/sigeth/opslab-workstation-base@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/sigeth/brokelabs-workstation-base@sha256:0000000000000000000000000000000000000000000000000000000000000000
       resources: {cpu: 250m, memory: 256Mi}
   access:
     terminals:

@@ -1,4 +1,4 @@
-// Package project holds the identifiers that will change when the project is
+// Package project holds the identifiers that change when the project is
 // renamed or moved to a GitHub organization. Keep every occurrence of the
 // project name, API group, owner and target platform here.
 //
@@ -7,11 +7,11 @@
 package project
 
 const (
-	// Name is the (working) project name.
-	Name = "opslab"
-	// APIGroup is the Kubernetes API group of all opslab resources.
-	APIGroup = "opslab.io"
-	// LabelPrefix prefixes every label and annotation set by opslab.
+	// Name is the project name in identifiers (CLI command, resource names).
+	Name = "brokelabs"
+	// APIGroup is the Kubernetes API group of all BrokeLabs resources.
+	APIGroup = "brokelabs.io"
+	// LabelPrefix prefixes every label and annotation set by BrokeLabs.
 	LabelPrefix = APIGroup + "/"
 	// Owner is the GitHub account hosting the repositories.
 	Owner = "Sigeth"

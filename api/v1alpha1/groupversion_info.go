@@ -1,10 +1,10 @@
-// Package v1alpha1 contains the opslab API: the Kubernetes custom resources
+// Package v1alpha1 contains the BrokeLabs API: the Kubernetes custom resources
 // shared by the platform (api) and the operator, and the documents exchanged
 // with challenge authors (challenge package manifest, catalog index) and
 // checkers (task results).
 //
 // +kubebuilder:object:generate=true
-// +groupName=opslab.io
+// +groupName=brokelabs.io
 package v1alpha1
 
 import (
@@ -12,7 +12,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	"github.com/Sigeth/opslab-core-go/pkg/project"
+	"github.com/Sigeth/brokelabs-core-go/pkg/project"
 )
 
 var (

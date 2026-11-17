@@ -18,13 +18,13 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
-	"github.com/Sigeth/opslab-core-go/pkg/project"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/pkg/project"
 )
 
-const module = "github.com/Sigeth/opslab-core-go"
+const module = "github.com/Sigeth/brokelabs-core-go"
 
-var schemaBaseURL = fmt.Sprintf("https://raw.githubusercontent.com/%s/opslab-core-go/main/schema/", project.Owner)
+var schemaBaseURL = fmt.Sprintf("https://raw.githubusercontent.com/%s/brokelabs-core-go/main/schema/", project.Owner)
 
 func main() {
 	out := flag.String("o", "schema", "output directory")

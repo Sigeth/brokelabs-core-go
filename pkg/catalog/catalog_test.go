@@ -12,7 +12,7 @@ import (
 	"oras.land/oras-go/v2/content"
 	"oras.land/oras-go/v2/content/memory"
 
-	"github.com/Sigeth/opslab-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
 )
 
 func pkg(name, version, title string) *v1alpha1.ChallengePackage {
@@ -24,7 +24,7 @@ func pkg(name, version, title string) *v1alpha1.ChallengePackage {
 }
 
 func ref(name, version string) string {
-	return "ghcr.io/sigeth/opslab-challenges/" + name + "@" + digest.FromString(name+version).String()
+	return "ghcr.io/sigeth/brokelabs-challenges/" + name + "@" + digest.FromString(name+version).String()
 }
 
 func TestAddKeepsVersionsSortedAndTheNewestMetadata(t *testing.T) {
@@ -146,7 +146,7 @@ func TestFetchRefusesUnknownFieldsAndOtherArtifacts(t *testing.T) {
 		return desc
 	}
 	store := memory.New()
-	unknown := push(store, ArtifactType, []byte(`{"apiVersion":"opslab.io/v1alpha1","kind":"CatalogIndex","packages":[],"extra":1}`))
+	unknown := push(store, ArtifactType, []byte(`{"apiVersion":"brokelabs.io/v1alpha1","kind":"CatalogIndex","packages":[],"extra":1}`))
 	if _, err := Fetch(ctx, store, unknown); err == nil || !strings.Contains(err.Error(), "extra") {
 		t.Fatalf("error = %v", err)
 	}
