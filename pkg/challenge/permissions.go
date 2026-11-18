@@ -20,12 +20,21 @@ import (
 var (
 	DefaultMachineCPU    = resource.MustParse("250m")
 	DefaultMachineMemory = resource.MustParse("256Mi")
+	// The resources of a vcluster machine are the budget of the whole
+	// virtual cluster: its control plane and the student's workloads.
+	DefaultVClusterCPU    = resource.MustParse("2")
+	DefaultVClusterMemory = resource.MustParse("2Gi")
+	MinVClusterCPU        = resource.MustParse("1")
+	MinVClusterMemory     = resource.MustParse("1Gi")
 )
 
 // MachineResources returns the CPU and memory a machine requests.
 func MachineResources(m v1alpha1.Machine) (cpu, memory resource.Quantity) {
-	if m.Resources != nil {
+	switch {
+	case m.Resources != nil:
 		return m.Resources.CPU, m.Resources.Memory
+	case m.Runtime == v1alpha1.RuntimeVCluster:
+		return DefaultVClusterCPU, DefaultVClusterMemory
 	}
 	return DefaultMachineCPU, DefaultMachineMemory
 }

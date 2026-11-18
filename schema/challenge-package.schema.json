@@ -403,7 +403,7 @@
         },
         "resources": {
           "$ref": "#/$defs/MachineResources",
-          "description": "Resources requested by the machine.\n+optional"
+          "description": "Resources requested by the machine (250m CPU and 256Mi by default). For\na vcluster machine, the budget of the whole virtual cluster: its control\nplane and the student's workloads (2 CPU and 2Gi by default, at least 1\nCPU and 1Gi).\n+optional"
         },
         "setup": {
           "items": {

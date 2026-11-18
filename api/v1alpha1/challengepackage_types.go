@@ -146,7 +146,10 @@ type Machine struct {
 	// image (vm). Pin it by digest. Not used by vcluster.
 	// +optional
 	Image string `json:"image,omitempty"`
-	// Resources requested by the machine.
+	// Resources requested by the machine (250m CPU and 256Mi by default). For
+	// a vcluster machine, the budget of the whole virtual cluster: its control
+	// plane and the student's workloads (2 CPU and 2Gi by default, at least 1
+	// CPU and 1Gi).
 	// +optional
 	Resources *MachineResources `json:"resources,omitempty"`
 	// Setup lists scripts (paths relative to the package root) run once as

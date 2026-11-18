@@ -15,6 +15,10 @@ const (
 	LabelUserNamespaces = project.LabelPrefix + "user-namespaces"
 	// UserNamespacesPolicy names the admission policies and their bindings.
 	UserNamespacesPolicy = project.Name + "-user-namespaces"
+	// NetworkPoliciesPolicy names the ValidatingAdmissionPolicy (and its
+	// binding) that lets only the operator write NetworkPolicies reaching
+	// outside a labelled namespace (D51). vcluster machines need it.
+	NetworkPoliciesPolicy = project.Name + "-instance-network-policies"
 )
 
 // NeedsUserNamespaces reports whether a runtime runs pods as root, so that its

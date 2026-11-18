@@ -8,13 +8,13 @@ import (
 	"slices"
 	"strings"
 
-	"cel.dev/cel-go/cel"
 	"github.com/Masterminds/semver/v3"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/util/validation"
 	"k8s.io/apimachinery/pkg/util/validation/field"
 
 	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
+	"github.com/Sigeth/brokelabs-core-go/pkg/kubecel"
 )
 
 // Validate checks a manifest as written by the author (before SetDefaults).
@@ -153,6 +153,12 @@ func (v *validator) machineList(machines []v1alpha1.Machine, fp *field.Path) {
 			if r.Memory.Sign() <= 0 {
 				v.add(field.Invalid(mp.Child("resources", "memory"), r.Memory.String(), "must be positive"))
 			}
+			if isVCluster && r.CPU.Cmp(MinVClusterCPU) < 0 {
+				v.add(field.Invalid(mp.Child("resources", "cpu"), r.CPU.String(), "a vcluster machine needs at least "+MinVClusterCPU.String()+" (control plane and workloads)"))
+			}
+			if isVCluster && r.Memory.Cmp(MinVClusterMemory) < 0 {
+				v.add(field.Invalid(mp.Child("resources", "memory"), r.Memory.String(), "a vcluster machine needs at least "+MinVClusterMemory.String()+" (control plane and workloads)"))
+			}
 		}
 		for j, s := range m.Setup {
 			v.file(mp.Child("setup").Index(j), s)
@@ -257,16 +263,7 @@ func (v *validator) tasks(tasks []v1alpha1.Task, fp *field.Path, customChecker b
 
 var (
 	octalMode = regexp.MustCompile(`^0?[0-7]{3,4}$`)
-	celEnv    = mustCELEnv()
 )
-
-func mustCELEnv() *cel.Env {
-	env, err := cel.NewEnv(cel.Variable("object", cel.DynType))
-	if err != nil {
-		panic(err)
-	}
-	return env
-}
 
 func (v *validator) check(c *v1alpha1.Check, fp *field.Path) {
 	set := 0
@@ -365,13 +362,8 @@ func (v *validator) kubeCEL(k *v1alpha1.KubeCELCheck, fp *field.Path) {
 			continue
 		}
 		set++
-		ast, issues := celEnv.Compile(expr)
-		if issues != nil && issues.Err() != nil {
-			v.add(field.Invalid(fp.Child(name), expr, issues.Err().Error()))
-			continue
-		}
-		if t := ast.OutputType(); t != cel.BoolType && t != cel.DynType {
-			v.add(field.Invalid(fp.Child(name), expr, "must evaluate to a bool"))
+		if _, err := kubecel.Compile(expr); err != nil {
+			v.add(field.Invalid(fp.Child(name), expr, err.Error()))
 		}
 	}
 	if set != 1 {

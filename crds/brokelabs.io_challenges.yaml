@@ -272,7 +272,11 @@ spec:
                                         the package (DNS-1123 label).
                                       type: string
                                     resources:
-                                      description: Resources requested by the machine.
+                                      description: |-
+                                        Resources requested by the machine (250m CPU and 256Mi by default). For
+                                        a vcluster machine, the budget of the whole virtual cluster: its control
+                                        plane and the student's workloads (2 CPU and 2Gi by default, at least 1
+                                        CPU and 1Gi).
                                       properties:
                                         cpu:
                                           anyOf:
@@ -1004,7 +1008,11 @@ spec:
                                 (DNS-1123 label).
                               type: string
                             resources:
-                              description: Resources requested by the machine.
+                              description: |-
+                                Resources requested by the machine (250m CPU and 256Mi by default). For
+                                a vcluster machine, the budget of the whole virtual cluster: its control
+                                plane and the student's workloads (2 CPU and 2Gi by default, at least 1
+                                CPU and 1Gi).
                               properties:
                                 cpu:
                                   anyOf:

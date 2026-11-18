@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/Sigeth/brokelabs-core-go/api/v1alpha1"
@@ -121,6 +122,14 @@ func TestValidateErrors(t *testing.T) {
 				p.Spec.Machines[1].KubeconfigFor = "workstation"
 			},
 			want: "spec.machines[1].kubeconfigFor",
+		},
+		{
+			name: "vcluster below its control plane",
+			dir:  "k8s-sa-tokens",
+			mutate: func(p *v1alpha1.ChallengePackage) {
+				p.Spec.Machines[0].Resources = &v1alpha1.MachineResources{CPU: resource.MustParse("2"), Memory: resource.MustParse("512Mi")}
+			},
+			want: "spec.machines[0].resources.memory",
 		},
 		{
 			name: "interval in on-demand mode",
