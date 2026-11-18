@@ -309,8 +309,8 @@ func (v *validator) check(c *v1alpha1.Check, fp *field.Path) {
 			v.add(field.Required(sp.Child("password"), "required with the password method"))
 		}
 		oneOf(v, sp.Child("expect"), c.SSHLogin.Expect, []v1alpha1.AccessExpectation{v1alpha1.ExpectAllowed, v1alpha1.ExpectDenied})
-		if m != nil && m.Runtime != v1alpha1.RuntimeVM && m.Runtime != v1alpha1.RuntimeUserns {
-			v.add(field.Invalid(mp, c.Machine, "sshLogin checks need a vm or userns machine"))
+		if m != nil && m.Runtime != v1alpha1.RuntimeVM {
+			v.add(field.Invalid(mp, c.Machine, "sshLogin checks need a vm machine"))
 		}
 	case c.Port != nil:
 		sp := fp.Child("port")

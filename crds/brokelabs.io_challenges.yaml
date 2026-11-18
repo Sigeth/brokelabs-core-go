@@ -562,7 +562,7 @@ spec:
                                           type: object
                                         sshLogin:
                                           description: SSHLogin attempts an SSH login
-                                            from the checker (vm and userns machines).
+                                            from the checker (vm machines).
                                           properties:
                                             expect:
                                               description: Expect is whether the login
@@ -1288,7 +1288,7 @@ spec:
                                   type: object
                                 sshLogin:
                                   description: SSHLogin attempts an SSH login from
-                                    the checker (vm and userns machines).
+                                    the checker (vm machines).
                                   properties:
                                     expect:
                                       description: Expect is whether the login must

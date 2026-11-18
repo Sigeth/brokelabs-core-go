@@ -202,7 +202,7 @@
         },
         "sshLogin": {
           "$ref": "#/$defs/SSHLoginCheck",
-          "description": "SSHLogin attempts an SSH login from the checker (vm and userns machines).\n+optional"
+          "description": "SSHLogin attempts an SSH login from the checker (vm machines).\n+optional"
         },
         "port": {
           "$ref": "#/$defs/PortCheck",

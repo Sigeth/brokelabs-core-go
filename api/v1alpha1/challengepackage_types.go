@@ -298,7 +298,7 @@ type Check struct {
 	// File asserts properties of a file on the machine.
 	// +optional
 	File *FileCheck `json:"file,omitempty"`
-	// SSHLogin attempts an SSH login from the checker (vm and userns machines).
+	// SSHLogin attempts an SSH login from the checker (vm machines).
 	// +optional
 	SSHLogin *SSHLoginCheck `json:"sshLogin,omitempty"`
 	// Port probes a port from the checker.
