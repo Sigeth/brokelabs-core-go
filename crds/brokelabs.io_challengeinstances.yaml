@@ -177,7 +177,7 @@ spec:
                       type: string
                     pod:
                       description: |-
-                        Pod running the machine, in the instance namespace (pod and sysbox
+                        Pod running the machine, in the instance namespace (pod and userns
                         runtimes). Terminals and checks exec into its MachineContainer.
                       type: string
                     ready:
@@ -188,7 +188,7 @@ spec:
                       description: Runtime of the machine.
                       enum:
                       - pod
-                      - sysbox
+                      - userns
                       - vcluster
                       - vm
                       type: string

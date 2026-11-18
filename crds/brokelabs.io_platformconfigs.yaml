@@ -75,7 +75,7 @@ spec:
                     on.
                   enum:
                   - pod
-                  - sysbox
+                  - userns
                   - vcluster
                   - vm
                   type: string
@@ -237,7 +237,7 @@ spec:
                       description: Runtime this capability is about.
                       enum:
                       - pod
-                      - sysbox
+                      - userns
                       - vcluster
                       - vm
                       type: string

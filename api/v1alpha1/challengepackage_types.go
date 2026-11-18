@@ -142,7 +142,7 @@ type Machine struct {
 	Name string `json:"name"`
 	// Runtime is the isolation technology the machine runs on.
 	Runtime Runtime `json:"runtime"`
-	// Image is a container image (pod, sysbox) or a KubeVirt containerDisk
+	// Image is a container image (pod, userns) or a KubeVirt containerDisk
 	// image (vm). Pin it by digest. Not used by vcluster.
 	// +optional
 	Image string `json:"image,omitempty"`
@@ -295,7 +295,7 @@ type Check struct {
 	// File asserts properties of a file on the machine.
 	// +optional
 	File *FileCheck `json:"file,omitempty"`
-	// SSHLogin attempts an SSH login from the checker (vm and sysbox machines).
+	// SSHLogin attempts an SSH login from the checker (vm and userns machines).
 	// +optional
 	SSHLogin *SSHLoginCheck `json:"sshLogin,omitempty"`
 	// Port probes a port from the checker.

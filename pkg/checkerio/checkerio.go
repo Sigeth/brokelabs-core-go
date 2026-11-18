@@ -33,8 +33,8 @@ type Targets struct {
 }
 
 // Target describes how to reach one machine. Which fields are set depends on
-// the runtime: SSH for vm (and sysbox when it runs sshd), exec for pod and
-// sysbox, a kubeconfig for vcluster.
+// the runtime: SSH for vm (and userns when it runs sshd), exec for pod and
+// userns, a kubeconfig for vcluster.
 type Target struct {
 	Runtime v1alpha1.Runtime `json:"runtime"`
 	// Host is the address of the machine on the cluster network.

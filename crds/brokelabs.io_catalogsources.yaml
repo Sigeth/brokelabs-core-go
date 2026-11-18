@@ -278,7 +278,7 @@ spec:
                                     a machine runs on.
                                   enum:
                                   - pod
-                                  - sysbox
+                                  - userns
                                   - vcluster
                                   - vm
                                   type: string

@@ -1,15 +1,17 @@
 package v1alpha1
 
 // Runtime is the isolation technology a machine runs on.
-// +kubebuilder:validation:Enum=pod;sysbox;vcluster;vm
+// +kubebuilder:validation:Enum=pod;userns;vcluster;vm
 type Runtime string
 
 const (
 	// RuntimePod is a plain pod under the "restricted" Pod Security Standard.
 	RuntimePod Runtime = "pod"
-	// RuntimeSysbox is a system container (Sysbox runtime class): systemd and
-	// container engines inside, without a privileged pod.
-	RuntimeSysbox Runtime = "sysbox"
+	// RuntimeUserns is a pod in a user namespace (hostUsers: false) under the
+	// "baseline" Pod Security Standard: root inside the container, an
+	// unprivileged user on the host. No mounts, sysctl, systemd or container
+	// engines: those need a vm.
+	RuntimeUserns Runtime = "userns"
 	// RuntimeVCluster is a virtual Kubernetes cluster in the instance namespace.
 	RuntimeVCluster Runtime = "vcluster"
 	// RuntimeVM is a KubeVirt virtual machine.
@@ -17,7 +19,7 @@ const (
 )
 
 // Runtimes lists every runtime, in increasing isolation order.
-var Runtimes = []Runtime{RuntimePod, RuntimeSysbox, RuntimeVCluster, RuntimeVM}
+var Runtimes = []Runtime{RuntimePod, RuntimeUserns, RuntimeVCluster, RuntimeVM}
 
 // Category is the topic of a challenge.
 // +kubebuilder:validation:Enum=linux-hardening;containers;kubernetes

@@ -57,13 +57,13 @@ type MachineStatus struct {
 	// Address reachable from the gateway and the checker (IP or DNS name).
 	// +optional
 	Address string `json:"address,omitempty"`
-	// Pod running the machine, in the instance namespace (pod and sysbox
+	// Pod running the machine, in the instance namespace (pod and userns
 	// runtimes). Terminals and checks exec into its MachineContainer.
 	// +optional
 	Pod string `json:"pod,omitempty"`
 }
 
-// MachineContainer is the name of the container running a pod or sysbox
+// MachineContainer is the name of the container running a pod or userns
 // machine inside MachineStatus.Pod.
 const MachineContainer = "machine"
 
