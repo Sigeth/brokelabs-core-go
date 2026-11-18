@@ -15,7 +15,7 @@ spec:
       seed: [setup/manifests]
     - name: workstation
       runtime: pod
-      image: ghcr.io/sigeth/brokelabs-workstation-k8s@sha256:0000000000000000000000000000000000000000000000000000000000000000
+      image: ghcr.io/sigeth/brokelabs-images/workstation-k8s@sha256:0000000000000000000000000000000000000000000000000000000000000000
       kubeconfigFor: cluster
   access:
     terminals:
